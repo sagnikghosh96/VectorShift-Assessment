@@ -1,34 +1,37 @@
 // llmNode.js
+import { BaseNode } from './baseNode';
 
-import { Handle, Position } from 'reactflow';
+const llmNodeConfig = {
+  title: 'LLM',
+  icon: '🤖',
+  inputs: [
+    { id: 'system', label: 'System', customTop: '33%' },
+    { id: 'prompt', label: 'Prompt', customTop: '67%' },
+  ],
+  outputs: [
+    { id: 'response', label: 'Response', position: 'right' },
+  ],
+  fields: [
+    {
+      name: 'model',
+      type: 'select',
+      label: 'Model',
+      options: ['GPT-4', 'GPT-3.5', 'Claude', 'Llama'],
+      defaultValue: 'GPT-4',
+    },
+    {
+      name: 'temperature',
+      type: 'number',
+      label: 'Temperature',
+      placeholder: '0.7',
+    },
+  ],
+  minWidth: 200,
+  minHeight: 130,
+  bgColor: 'bg-violet-900',
+  borderColor: 'border-violet-500',
+};
 
 export const LLMNode = ({ id, data }) => {
-
-  return (
-    <div style={{width: 200, height: 80, border: '1px solid black'}}>
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-system`}
-        style={{top: `${100/3}%`}}
-      />
-      <Handle
-        type="target"
-        position={Position.Left}
-        id={`${id}-prompt`}
-        style={{top: `${200/3}%`}}
-      />
-      <div>
-        <span>LLM</span>
-      </div>
-      <div>
-        <span>This is a LLM.</span>
-      </div>
-      <Handle
-        type="source"
-        position={Position.Right}
-        id={`${id}-response`}
-      />
-    </div>
-  );
-}
+  return <BaseNode id={id} data={data} config={llmNodeConfig} />;
+};
